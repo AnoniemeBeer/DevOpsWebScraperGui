@@ -182,7 +182,7 @@
             this.Controls.Add(this.ButtonScrapeData);
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Webscraper";
             this.ResumeLayout(false);
             this.PerformLayout();
 
