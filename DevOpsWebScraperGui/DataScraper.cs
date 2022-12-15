@@ -114,37 +114,43 @@ namespace DevOpsWebScraperGui
             };
             videoData.Add(headerList);
 
+            int max = 5;
             // Every video gets its own dictionary in the list
             for (int i = 0; i < 5; i++)
             {
-                // Create an empty list where all data is going to
-                List<string> list = new List<string>();
+                try
+                {
+                    // Create an empty list where all data is going to
+                    List<string> list = new List<string>();
 
-                // Defining the variable where the data will be stored in
-                string str_videoTitle, str_videoUrl, str_uploader, str_views, str_uploadDate;
+                    // Defining the variable where the data will be stored in
+                    string str_videoTitle, str_videoUrl, str_uploader, str_views, str_uploadDate;
 
-                // Getting the web elements from the from the page
-                IWebElement elem_videoTitle = videos[i].FindElement(By.CssSelector("#video-title > yt-formatted-string"));
-                IWebElement elem_videoUrl = videos[i].FindElement(By.CssSelector("#video-title"));
-                IWebElement elem_uploader = videos[i].FindElement(By.XPath("div[1]/div/div[2]/ytd-channel-name/div/div/yt-formatted-string/a"));
-                IWebElement elem_views = videos[i].FindElement(By.CssSelector("#metadata-line > span:nth-child(3)"));
-                IWebElement elem_uploadDate = videos[i].FindElement(By.CssSelector("#metadata-line > span:nth-child(4)"));
+                    // Getting the web elements from the from the page
+                    IWebElement elem_videoTitle = videos[i].FindElement(By.CssSelector("#video-title > yt-formatted-string"));
+                    IWebElement elem_videoUrl = videos[i].FindElement(By.CssSelector("#video-title"));
+                    IWebElement elem_uploader = videos[i].FindElement(By.XPath("div[1]/div/div[2]/ytd-channel-name/div/div/yt-formatted-string/a"));
+                    IWebElement elem_views = videos[i].FindElement(By.CssSelector("#metadata-line > span:nth-child(3)"));
+                    IWebElement elem_uploadDate = videos[i].FindElement(By.CssSelector("#metadata-line > span:nth-child(4)"));
 
-                // Extracting the data from the web elements
-                str_videoTitle = elem_videoTitle.Text;
-                str_videoUrl = elem_videoUrl.GetAttribute("href");
-                str_uploader = elem_uploader.Text;
-                str_views = elem_views.Text;
-                str_uploadDate = elem_uploadDate.Text;
+                    // Extracting the data from the web elements
+                    str_videoTitle = elem_videoTitle.Text;
+                    str_videoUrl = elem_videoUrl.GetAttribute("href");
+                    str_uploader = elem_uploader.Text;
+                    str_views = elem_views.Text;
+                    str_uploadDate = elem_uploadDate.Text;
 
-                // Adding the extracted data to the dictionary.
-                list.Add(str_videoTitle);
-                list.Add(str_videoUrl);
-                list.Add(str_uploader);
-                list.Add(str_views);
-                list.Add(str_uploadDate);
+                    // Adding the extracted data to the dictionary.
+                    list.Add(str_videoTitle);
+                    list.Add(str_videoUrl);
+                    list.Add(str_uploader);
+                    list.Add(str_views);
+                    list.Add(str_uploadDate);
 
-                videoData.Add(list);
+                    videoData.Add(list);
+                }
+                catch { max++; }
+
             }
 
             System.Threading.Thread.Sleep(5000);
