@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SearchForm));
             this.SearchWord = new System.Windows.Forms.Label();
             this.QuitButton = new System.Windows.Forms.Button();
             this.ButtonScrapeData = new System.Windows.Forms.Button();
@@ -81,6 +82,7 @@
             this.Controls.Add(this.QuitButton);
             this.Controls.Add(this.ButtonScrapeData);
             this.Controls.Add(this.SearchWord);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "SearchForm";
             this.Text = "SearchForm";

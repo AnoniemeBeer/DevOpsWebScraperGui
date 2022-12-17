@@ -55,7 +55,7 @@ namespace DevOpsWebScraperGui
             else if (CBF1Standings.Checked)
             {
                 F1Form f1Form = new F1Form(exportChoice);
-                f1Form.Show();
+                f1Form.Show(); 
             }
         }
     }

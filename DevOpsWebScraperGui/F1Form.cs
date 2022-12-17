@@ -35,10 +35,10 @@ namespace DevOpsWebScraperGui
                 MessageBox.Show("Please enter a year starting from 1950 up to 2022.", "error");
             }
 
-            if (!(TBCategory.Text == "races" | TBCategory.Text == "drivers" | TBCategory.Text == "teams" | TBCategory.Text == "fastest-laps") & flag)
+            if (!(TBCategory.Text == "races" | TBCategory.Text == "drivers" | TBCategory.Text == "team" | TBCategory.Text == "fastest-laps") & flag)
             {
-                MessageBox.Show("Please enter a valid category");
-                
+                MessageBox.Show("Please enter a valid category", "error");
+                flag = false;
             }
 
             if (flag)
@@ -77,6 +77,11 @@ namespace DevOpsWebScraperGui
         private void QuitButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void TBCategory_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

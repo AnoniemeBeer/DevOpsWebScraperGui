@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(F1Form));
             this.QuitButton = new System.Windows.Forms.Button();
             this.ButtonScrapeData = new System.Windows.Forms.Button();
             this.Year = new System.Windows.Forms.Label();
@@ -73,15 +74,16 @@
             this.TBCategory.Name = "TBCategory";
             this.TBCategory.Size = new System.Drawing.Size(237, 20);
             this.TBCategory.TabIndex = 16;
+            this.TBCategory.TextChanged += new System.EventHandler(this.TBCategory_TextChanged);
             // 
             // Type
             // 
             this.Type.AutoSize = true;
             this.Type.Location = new System.Drawing.Point(12, 87);
             this.Type.Name = "Type";
-            this.Type.Size = new System.Drawing.Size(211, 13);
+            this.Type.Size = new System.Drawing.Size(206, 13);
             this.Type.TabIndex = 15;
-            this.Type.Text = "Category: races, drivers, teams, fastest-laps";
+            this.Type.Text = "Category: races, drivers, team, fastest-laps";
             // 
             // TBYear
             // 
@@ -101,6 +103,7 @@
             this.Controls.Add(this.QuitButton);
             this.Controls.Add(this.ButtonScrapeData);
             this.Controls.Add(this.Year);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "F1Form";
             this.Text = "F1Form";
             this.ResumeLayout(false);
