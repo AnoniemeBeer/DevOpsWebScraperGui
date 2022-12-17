@@ -153,8 +153,6 @@ namespace DevOpsWebScraperGui
 
             }
 
-            System.Threading.Thread.Sleep(5000);
-
             driver.Quit();
 
             return videoData;
@@ -233,7 +231,7 @@ namespace DevOpsWebScraperGui
 
             }
 
-            driver.Close();
+            driver.Quit();
             return jobData;
         }
 
@@ -308,7 +306,7 @@ namespace DevOpsWebScraperGui
                 }
                 jobData.Add(list);
             }
-            driver.Close();
+            driver.Quit();
             return jobData;
         }
 
