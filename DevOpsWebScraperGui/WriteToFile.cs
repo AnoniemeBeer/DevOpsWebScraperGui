@@ -16,7 +16,7 @@ namespace DevOpsWebScraperGui
                 {
                     line += s + ", ";
                 }
-                csvString+= line.Remove(line.Length - 2) + System.Environment.NewLine;
+                csvString += line.Remove(line.Length - 2) + System.Environment.NewLine;
             }
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
