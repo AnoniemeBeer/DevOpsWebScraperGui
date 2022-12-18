@@ -563,3 +563,4 @@ The source code for the project can be found on [my github repository](https://g
 
 - [Selinum Webscraper](https://www.selenium.dev/documentation/)
 - [Microsoft .net Documentation](https://learn.microsoft.com/en-us/dotnet/)
+- [Link To Explanation Video](https://youtu.be/wzoa-9hbQUo)
