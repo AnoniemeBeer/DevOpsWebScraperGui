@@ -31,6 +31,7 @@ The project is build with two main classes: a class for the scraping part and a 
 <img src="Assets/Images/MainScreen.png" alt="Screenshot of main page" width="30%"><img src="Assets/Images/YoutubeIctjobScreen.png" alt="Screenshot of youtube/ictjob page" width="30%"><img src="Assets/Images/F1Screen.png" alt="Screenshot of F1 page" width="30%">
 
 ## 3.1. Screens
+The program was orriginally a console application, but when I noticed I had time enough to make some extra features, I copied the scraper and export classes and put them in a windows forms application. This
 
 ### 3.1.1. Main screen
 
