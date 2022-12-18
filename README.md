@@ -31,13 +31,18 @@ The project is build with two main classes: a class for the scraping part and a 
 <img src="Assets/Images/MainScreen.png" alt="Screenshot of main page" width="30%"><img src="Assets/Images/YoutubeIctjobScreen.png" alt="Screenshot of youtube/ictjob page" width="30%"><img src="Assets/Images/F1Screen.png" alt="Screenshot of F1 page" width="30%">
 
 ## 3.1. Screens
-The program was orriginally a console application, but when I noticed I had time enough to make some extra features, I copied the scraper and export classes and put them in a windows forms application. This
+The program was orriginally a console application, but when I noticed I had time enough to make some extra features, I copied the scraper and export classes and put them in a windows forms application. This Application is now much more easy to use. As mentioned earlier, there are three screens. One screen is the main screen where the application starts on. Then, depending on which data selector you choose, a different screen will pop up. For the search methods, the SearchForm is shown and for the F1 method the F1Form is shown. The three screens have identical measurements and the same layout. They all have the same application icon. To install the application, there is an installer in the releases in [the github repository](https://github.com/AnoniemeBeer/.)
 
 ### 3.1.1. Main screen
+The main screen is the first screen the user gets to see. Here the user selects which of the following options he wants. If multiple options are given in a specific column, the top one will be used. When selecting scrape data, the needed screen is opened where the user has to input information. When the scraping is completed, the user will return to this screen and might choose another option or close the application.
 
 ### 3.1.2. Search Screen
+This screen is the screen the user gets send to when he chooses for the 'Search youtube' or 'Job Search' option. On this screen, there is an input box where the user can give his searchterm he wants to search for on the webpage. When the scrape data button is clicked, the webscraper will start and a browser window will be opened and used by the script. When the scraping is finished, the user will be asked where he wants to store the scraped data. This happens with a windows save file screen. When the location is chosen, the file is saved and a last messagebox reminds the user of the absolute path of the newly generated file. The user is then send back to the main screen.
 
 ### 3.1.3. F1 Screen
+The F1 screen looks the same as the search screen, but has two input boxes: one for the year and one for the category. The year must be an input between 1950 up to 2022(for now). The category must be one of the categories mentioned in the label of the input box. If any other information is entered, the program will give an error messagebox. When the information is correct and the button is clicked, the scraper will start gathering data from the website. After which it asks the user to specify the location where the data must be stored in the same way as for the search screen following with a messagebox with the absolute path. To round up the user is send back to the main screen
+
+All the scripts that handle button clicks and user inputs can be found on the [github repository](https://github.com/AnoniemeBeer/DevOpsWebScraperGui).
 
 ## 3.2. Scrapers
 The class is writen in the file: DataScraper.cs. It contains 5 methods, two of which are meant for development and testing. I will be focussing on the three methods used in the program. Communication between the data scrapers and the exporters are handled via a universal type. This is done by a two dimentional string list: List\<List\<string>>. This way, all scrapers can use all exporters and all exporters can convert data from all scrapers.
@@ -235,6 +240,7 @@ public static List<List<string>> ScrapeF1Data(string categoryChoice, string year
     // Starting the google chrome driver
     IWebDriver driver = new ChromeDriver();
 
+    // This part of the code manages the driver and making usefull objects that store part of the webpage.
     driver.Navigate().GoToUrl(String.Format(url, yearChoice, categoryChoice));
 
     IWebElement acceptCookies = driver.FindElement(By.XPath("/html/body/div[5]/div/div/div[2]/div[3]/div[2]/button[2]"));
@@ -247,6 +253,7 @@ public static List<List<string>> ScrapeF1Data(string categoryChoice, string year
     ReadOnlyCollection<IWebElement> columnNames = dataTable.FindElements(By.CssSelector("thead > tr > th"));
     ReadOnlyCollection<IWebElement> columnData = dataTable.FindElements(By.CssSelector("tbody > tr"));
 
+    // In this part of the code, the data form the table header is extracted from the page.
     List<string> headerList = new List<string>();
     foreach (IWebElement columnName in columnNames)
     {
@@ -264,6 +271,7 @@ public static List<List<string>> ScrapeF1Data(string categoryChoice, string year
     }
     jobData.Add(headerList);
 
+    // In this part of the code, the data will be extracted from the page and added to the list.
     foreach (IWebElement row in columnData)
     {
         List<string> list = new List<string>();
@@ -302,7 +310,7 @@ public static List<List<string>> ScrapeF1Data(string categoryChoice, string year
 }
 ```
 
-All of the code can be found in the github repo mentioned in the conclusion.
+All of the code can be found in the [github repository](https://github.com/AnoniemeBeer/DevOpsWebScraperGui) mentioned in the conclusion.
 
 ## 3.3. Exporters
 When scraping for data, an important thing is how to store the data, because without a organized way of storing, the data becomes useless. This is why file types like csv, json and xml exist. The data enters the export methods inside the two dimentional string list mentioned earlier. All export methods have the same in and output, the 2D arrays as parameters and the paths the files are stored at as return values.
@@ -313,6 +321,7 @@ The csv method is very simple, it generates a string that contains all data stor
 ```cs
 public static string WriteToCsv(List<List<string>> data)
 {
+    // In this part of the code the string with data is generated
     string csvString = "";
     foreach (List<string> entry in data)
     {
@@ -324,6 +333,7 @@ public static string WriteToCsv(List<List<string>> data)
         csvString+= line.Remove(line.Length - 2) + System.Environment.NewLine;
     }
 
+    // In this part of the code, the data will be stored to the file
     SaveFileDialog saveFileDialog = new SaveFileDialog();
     saveFileDialog.Filter = "csv file (*.csv)|*.csv|All files (*.*)|*.*";
     string path = "";
@@ -344,6 +354,7 @@ Json is a datatype that is often used in web environments: rest api's, databases
 ```cs
 public static string WriteToJson(List<List<string>> data)
 {
+    // In this part of the code the string with data is generated
     List<string> jsonNames = data[0];
 
     string jsonString = "[" + System.Environment.NewLine;
@@ -378,7 +389,7 @@ public static string WriteToJson(List<List<string>> data)
     }
     jsonString = jsonString.Remove(jsonString.Length - 1) + System.Environment.NewLine + "]";
 
-
+    // In this part of the code, the data will be stored to the file
     SaveFileDialog saveFileDialog = new SaveFileDialog();
     saveFileDialog.Filter = "json file (*.json)|*.json|All files (*.*)|*.*";
     string path = "";
@@ -400,6 +411,7 @@ Xml is another widely used datastorage file type. This file type works with tags
 ```cs
 public static string WriteToXml(List<List<string>> data)
 {
+    // In this part of the code the string with data is generated
     List<string> xmlNames = data[0];
 
     string xmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" + System.Environment.NewLine;
@@ -421,6 +433,7 @@ public static string WriteToXml(List<List<string>> data)
     }
     xmlString += XmlTag("Data", true);
 
+    // In this part of the code, the data will be stored to the file
     SaveFileDialog saveFileDialog = new SaveFileDialog();
     saveFileDialog.Filter = "xml file (*.xml)|*.xml|All files (*.*)|*.*";
     string path = "";
@@ -461,7 +474,8 @@ Html is basically the same as xml. It works with tags in the exact same way. How
 
 ```cs
 public static string WriteToHtml(List<List<string>> data)
-{
+{ 
+    // In this part of the code the string with data is generated
     List<string> tableHeaders = data[0];
 
     string xmlString = "<!DOCTYPE html>" + System.Environment.NewLine + xmlTag("html") + System.Environment.NewLine + xmlTag("head") + System.Environment.NewLine + "\t" + xmlTag("title") + "Scraped Data" + xmlTag("title", true) + System.Environment.NewLine + xmlTag("head", true) + System.Environment.NewLine + xmlTag("body") + System.Environment.NewLine;
@@ -490,6 +504,7 @@ public static string WriteToHtml(List<List<string>> data)
     xmlString += "\t" + XmlTag("table", true);
     xmlString += System.Environment.NewLine + xmlTag("body", true) + System.Environment.NewLine + xmlTag("html", true);
 
+    // In this part of the code, the data will be stored to the file
     SaveFileDialog saveFileDialog = new SaveFileDialog();
     saveFileDialog.Filter = "html file (*.html)|*.html|All files (*.*)|*.*";
     string path = "";
@@ -540,6 +555,7 @@ public static string GenerateSql(List<List<string>> data)
     }
     sqlString = sqlString.Remove(sqlString.Length - 2) + ";";
 
+    // In this part of the code, the data will be stored to the file
     SaveFileDialog saveFileDialog = new SaveFileDialog();
     saveFileDialog.Filter = "sql file (*.sql)|*.sql|All files (*.*)|*.*";
     string path = "";
@@ -563,3 +579,4 @@ The source code for the project can be found on [my github repository](https://g
 
 - [Selinum Webscraper](https://www.selenium.dev/documentation/)
 - [Microsoft .net Documentation](https://learn.microsoft.com/en-us/dotnet/)
+- [Stack Overflow c# section](https://stackoverflow.com/questions/tagged/c%23)
