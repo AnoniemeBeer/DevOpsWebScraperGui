@@ -51,6 +51,7 @@ The class is writen in the file: DataScraper.cs. It contains 5 methods, two of w
 The project is build upon Selenium, a suite of tools for browser automation that allows developers to automate web browsers to test applications, scrape data, and perform various other tasks. This comes with a driver that connects to a browser window. To make this work, 2 dependencies are needed:
 - Selenium webdriver: The driver selenium uses to connect to the browser
 - WebDriver Manager: An automatic tool that lets selenium pick the right driver for whatever browser is installed on the system.
+Also google chrome is needed for this project. The project is written to automatically connect to this browser.
 
 ### 3.2.2. Youtube Search
 The youtube search method takes one parameter, the search term. The user can input this in on of the screens. It then puts the searchterm in the url that the selenium driver is connecting to. This way, the program doesn't have to first load youtube and then load youtube again with the searchterm in the search bar. This minimizes the amount of requests that happen to youtube servers. The first thing that the scraper will get from the driver or from the webpage is the 'accept all' button for the cookies. I tried to send cookies through the driver, but Youtube changes its cookies slightly constantly so that wasn't an option. The button is saved as a IWebElement and later clicked on.
